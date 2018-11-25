@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Get host IP address.
+      shell: "/sbin/ip route|awk '/default/ { print $3 }'"
+      register: host_ip
+      changed_when: false
+
+    - name: Set host_ip_address variable.
+      set_fact:
+        host_ip_address: "{{ host_ip.stdout }}"
+        

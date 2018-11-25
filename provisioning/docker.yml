@@ -1,0 +1,17 @@
+---
+- name: Build Docker images from Dockerfiles.
+  docker_image:
+    name: "{{ item.name }}"
+    tag: "{{ item.tag }}"
+    path: "/vagrant/provisioning/{{ item.directory }}"
+    state: build
+  with_items:
+    - { name: www, tag: "nginx", directory: www }
+
+- name: Run nginx container.
+  docker_container:
+    image: www:nginx
+    name: www
+    state: started
+    ports: "80:80"
+    
