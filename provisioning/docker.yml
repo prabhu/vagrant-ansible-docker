@@ -1,5 +1,5 @@
 ---
-- name: Build Docker images from Dockerfiles.
+- name: Build Docker images from Dockerfiles (Get coffee)
   docker_image:
     name: "{{ item.name }}"
     tag: "{{ item.tag }}"
@@ -8,7 +8,7 @@
   with_items:
     - { name: www, tag: "nginx", directory: www }
 
-- name: Run nginx container.
+- name: Run nginx container
   docker_container:
     image: www:nginx
     name: www

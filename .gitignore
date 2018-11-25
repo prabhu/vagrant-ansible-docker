@@ -1,3 +1,6 @@
 .vscode
 .scannerwork/
 /.vs
+.vagrant/
+Gemfile.lock
+provisioning/main.retry

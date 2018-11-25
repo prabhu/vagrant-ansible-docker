@@ -6,9 +6,9 @@
   become: yes
 
 - name: Install Pip.
-  apt: name=python-pip state=installed
+  apt: name=python-pip state=present
   become: yes
 
 - name: Install Docker Python library.
-  pip: name=docker-py state=present
+  pip: name=docker state=present
   become: yes

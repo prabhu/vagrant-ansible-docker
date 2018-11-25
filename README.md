@@ -11,8 +11,6 @@ Install the following additional packages:
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant](https://www.vagrantup.com/downloads.html)
 - [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
-- 
-- 
 
 ## Provisioning
 
@@ -20,10 +18,15 @@ Install the following additional packages:
 git clone <repo url>
 cd vagrant-ansible-docker
 ansible-galaxy install -r requirements.yml
+vagrant up
 ```
+
+Visit http://192.168.56.10
 
 ## Testing
 
 ```bash
+sudo gem install bundle
 bundle
+rake spec
 ```

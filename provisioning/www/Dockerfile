@@ -1,26 +1,30 @@
-FROM alpine:latest
+# This image has good defaults for nginx.
+# In practice this should get re-created and pulled from a private container registry
+FROM nginx:stable-alpine
 
 LABEL maintainer="Prabhu Subramanian"
 
-# Install required packages
-RUN apk --update add --no-cache sudo add python py-pip openssl ca-certificates \
-    && apk --update add --virtual build-dependencies python-dev nginx libffi-dev openssl-dev build-base \
-    && pip install --upgrade pip cffi \
+RUN apk --update add --no-cache python3 py3-pip zip tar make bash bash-completion wget curl jq git openssl openssh-client \
     && rm -rf /var/lib/apt/lists/*
 RUN apk add --no-cache ca-certificates && update-ca-certificates
+RUN pip3 install --upgrade pip
 
-# Install ansible
-RUN pip install ansible
-RUN apk del build-dependencies 
+# Install ansible (Takes few mins)
+RUN apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python3-dev make \
+  && pip3 install ansible \
+  && apk del --purge build
 
 # Copy playbook
 COPY playbook.yml /etc/ansible/playbook.yml
 
-RUN mkdir -m 755 /opt/www
-COPY index.html /opt/www
+COPY index.html /usr/share/nginx/html/
 
 # Run playbook
 RUN ansible-playbook /etc/ansible/playbook.yml --connection=local
 
 # Expose port 80 or 443 for https
 EXPOSE 80
+
+STOPSIGNAL SIGTERM
+
+CMD ["nginx", "-g", "daemon off;"]

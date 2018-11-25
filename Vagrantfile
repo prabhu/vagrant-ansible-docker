@@ -2,7 +2,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # This value should match any private box or one from Vagrant cloud catalog
-  config.vm.box = "hashicorp/xenial64"
+  config.vm.box = "geerlingguy/ubuntu1604"
   config.vm.network :private_network, ip: "192.168.56.10"
   config.ssh.insert_key = false
 
